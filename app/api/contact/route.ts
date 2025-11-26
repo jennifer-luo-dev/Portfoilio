@@ -8,6 +8,16 @@ export async function POST(req: Request) {
     if (!name || !email || !message)
       return NextResponse.json({ error: "Missing fields" }, { status: 400 });
 
+    // basic email validation to reject malformed addresses early
+    // keep it intentionally simple — this is only user input validation
+    const emailIsValid =
+      typeof email === "string" && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
+    if (!emailIsValid)
+      return NextResponse.json(
+        { error: "Invalid email address" },
+        { status: 400 }
+      );
+
     const apiKey = process.env.RESEND_API_KEY;
     const from = process.env.RESEND_FROM;
     const to = process.env.RESEND_TO;
@@ -25,11 +35,14 @@ export async function POST(req: Request) {
       <div>${escapeHtml(message)}</div>
     `;
 
-    const payload = {
+    // Keep the `from` address set from the environment (must be a verified sender)
+    // Add reply_to so replies go directly to the user who submitted the form.
+    const payload: Record<string, unknown> = {
       from,
       to: [to],
       subject: `Portfolio message from ${name}`,
       html,
+      reply_to: email,
     };
 
     const r = await fetch(RESEND_ENDPOINT, {
@@ -42,9 +55,24 @@ export async function POST(req: Request) {
     });
 
     if (!r.ok) {
-      const bodyText = await r.text();
+      // Attempt to parse the response body for a helpful error message —
+      // Resend may return JSON or plain text.
+      let detail = undefined;
+      try {
+        detail = await r.json();
+      } catch {
+        try {
+          detail = await r.text();
+        } catch {
+          detail = undefined;
+        }
+      }
+
+      // Log for server-side debugging (do not leak secrets to client)
+      console.error("Resend API error", { status: r.status, detail });
+
       return NextResponse.json(
-        { error: "Failed to send", detail: bodyText },
+        { error: "Failed to send", status: r.status, detail },
         { status: 502 }
       );
     }

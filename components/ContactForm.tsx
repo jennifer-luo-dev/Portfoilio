@@ -4,20 +4,41 @@ import { useState } from "react";
 export default function ContactForm() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [status, setStatus] = useState<null | "sending" | "ok" | "error">(null);
+  const [clientError, setClientError] = useState<string | null>(null);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setStatus("sending");
+    setClientError(null);
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-      if (res.ok) setStatus("ok");
-      else setStatus("error");
+      if (res.ok) {
+        setStatus("ok");
+        setClientError(null);
+      } else {
+        // try to read JSON detail so we can show a more helpful message
+        let err = "Error sending — try again later.";
+        try {
+          const body = await res.json();
+          if (body?.error) err = String(body.error);
+          else if (body?.detail) err = String(body.detail);
+        } catch (e) {
+          // fall back to status text
+          err = res.statusText || err;
+        }
+        console.error("Contact form error response:", res.status, err);
+        // show the server-provided message (still keep a friendly default)
+        setStatus(null);
+        // display a temporary error label (stored in local state)
+        setClientError(err);
+      }
     } catch {
-      setStatus("error");
+      setStatus(null);
+      setClientError("Error sending — try again later.");
     }
   }
 
@@ -63,10 +84,8 @@ export default function ContactForm() {
         {status === "ok" && (
           <span className="text-sm text-green-600">Sent — thank you!</span>
         )}
-        {status === "error" && (
-          <span className="text-sm text-red-600">
-            Error sending — try again later.
-          </span>
+        {clientError && (
+          <span className="text-sm text-red-600">{clientError}</span>
         )}
       </div>
     </form>
