@@ -47,7 +47,7 @@ const items = [
     title: "B.S. Computer Science",
     role: "Tufts University",
     period: "2023 — 2027",
-    bullets: ["Graduated with honors"],
+    bullets: ["Studying computer science with a minor in chemistry"],
   },
 ];
 
