@@ -35,7 +35,7 @@ export default function RootLayout({
               <p className="">Full-Stack & ML/AI Developer</p>
             </div>
             <nav className="">
-              <Link href="" className="mr-6">
+              <Link href="/Projects" className="mr-6">
                 Work
               </Link>
               <Link href="">About</Link>

@@ -1,3 +1,15 @@
+# Portfolio App
+
+1. Copy .env.example → .env.local and fill RESEND_API_KEY, RESEND_FROM, RESEND_TO
+2. npm install
+3. npm run dev
+4. Open http://localhost:3000
+
+Notes:
+
+- Replace images in /public (profile.jpg + project screenshots) with your own.
+- This app uses a server route POST /api/contact that calls Resend to deliver messages.
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
