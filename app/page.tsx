@@ -1,5 +1,3 @@
-import headshot from "../components/headshot.jpeg";
-
 export default function Home() {
   return (
     <section className="container mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
@@ -101,7 +99,7 @@ export default function Home() {
         <div className="w-44 h-44 rounded-full overflow-hidden bg-slate-100 dark:bg-slate-700 mb-4">
           {/* replace with your photo at public/profile.jpg */}
           <img
-            src={headshot.src}
+            src="/images/headshot.jpeg"
             alt="Jennifer"
             className="w-full h-full object-cover"
           />

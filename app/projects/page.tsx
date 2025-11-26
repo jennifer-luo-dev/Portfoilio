@@ -8,9 +8,10 @@ const projects = [
     title: "English At Large",
     description:
       "A full-stack inventory and content-search platform to replace a slow, manual resource lookup process for tutors. Implemented Next.js + React, PostgreSQL, and Prisma to design a scalable data model, optimized search queries, and built admin-facing workflows. Integrated Neon serverless database and API routes to handle resource ingestion, tagging, and filtering.",
-    tech: ["React.js", "TypeScript", "Node", "Postgres"],
+    tech: ["React.js", "Next.js", "TypeScript", "Node", "Postgres"],
     github: "https://github.com/JumboCode/english-at-large/",
     live: "https://jumbocode.org/projects/english-at-large",
+    img: "/images/english-at-large.jpeg",
   },
   {
     title: "White",
@@ -28,6 +29,7 @@ const projects = [
     ],
     github: "https://github.com/jennifer-luo-dev/white",
     live: "https://white-eta.vercel.app",
+    img: "/images/white.svg",
   },
   {
     title: "HomeStart",
@@ -44,6 +46,7 @@ const projects = [
     ],
     github: "https://jumbocode.org/projects/homestart",
     live: "https://www.homestart.org/",
+    img: "/images/homestart.jpeg",
   },
   {
     title: "Geo-Spatial Field Representation Learning & Reconstruction",
@@ -66,6 +69,7 @@ const projects = [
     ],
     github: "https://github.com/jennifer-luo-dev/gradient-growers/tree/main",
     live: "#",
+    img: "/images/geofm.jpeg",
   },
   {
     title: "Movie Recommendation System",
@@ -189,7 +193,7 @@ export default function Projects() {
           <button
             type="button"
             onClick={clearFilters}
-            className="px-3 py-2 rounded-md text-sm bg-slate-100 dark:bg-slate-700"
+            className="px-3 py-2 rounded-md text-sm bg-slate-100 dark:bg-slate-700 hover:bg-slate-300"
             aria-label="Clear filters"
             title="Clear filters"
           >
@@ -205,7 +209,7 @@ export default function Projects() {
                 key={t}
                 onClick={() => toggleTag(t)}
                 type="button"
-                className={`text-xs px-3 py-1 rounded-full border transition-colors focus:outline-none focus:ring-2 focus:ring-offset-1 ${
+                className={`text-xs px-3 py-1 rounded-full border transition-colors focus:outline-none focus:ring-2 focus:ring-offset-1 hover:bg-slate-300 ${
                   isSelected
                     ? "bg-blue-600 text-white border-blue-600"
                     : "bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200"

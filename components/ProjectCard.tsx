@@ -20,7 +20,7 @@ export default function ProjectCard({
             className="object-cover w-full h-full rounded-md"
           />
         ) : (
-          <div>Screenshot</div>
+          <div></div>
         )}
       </div>
       <h3 className="text-lg font-semibold">{project.title}</h3>
@@ -31,7 +31,7 @@ export default function ProjectCard({
         {project.tech.map((t) => (
           <span
             key={t}
-            className="text-xs px-2 py-1 bg-slate-100 dark:bg-slate-700 rounded-full"
+            className="text-xs px-2 py-1 bg-slate-100 dark:bg-slate-700 rounded-full hover:bg-slate-300"
           >
             {t}
           </span>
