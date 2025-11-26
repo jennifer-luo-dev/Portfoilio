@@ -40,7 +40,7 @@ export async function POST(req: Request) {
     const payload: Record<string, unknown> = {
       from,
       to: [to],
-      subject: `Portfolio message from ${name}`,
+      subject: `Message from ${name}`,
       html,
       reply_to: email,
     };
